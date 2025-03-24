@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Lanterns Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('image.png') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+        .lanterns {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .lantern {
+            position: absolute;
+            width: 50px;
+            animation: floatUp 10s linear infinite;
+            opacity: 0.8;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+        .interactive-lantern {
+            position: absolute;
+            width: 100px;
+            left: 50%;
+            bottom: -150px;
+            transform: translateX(-50%);
+            transition: bottom 2s ease-in-out;
+            cursor: pointer;
+        }
+        .interactive-lantern.show {
+            bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to My Page</h1>
+    <div class="lanterns"></div>
+    <img src="lantern.png" class="interactive-lantern" id="popupLantern" onclick="handleLanternClick()">
+    <script>
+        const lanternContainer = document.querySelector('.lanterns');
+        function createLantern() {
+            const lantern = document.createElement('img');
+            lantern.src = 'lantern.png';  // Use the uploaded lantern image
+            lantern.classList.add('lantern');
+            lantern.style.left = Math.random() * 100 + 'vw';
+            lantern.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            lantern.style.width = (Math.random() * 40 + 30) + 'px';
+            lanternContainer.appendChild(lantern);
+            setTimeout(() => { lantern.remove(); }, 10000);
+        }
+        setInterval(createLantern, 1000);
+
+        document.body.addEventListener('click', () => {
+            const popupLantern = document.getElementById('popupLantern');
+            popupLantern.classList.add('show');
+        });
+
+        function handleLanternClick() {
+            alert("You clicked the lantern!");
+        }
+    </script>
+</body>
+</html>
